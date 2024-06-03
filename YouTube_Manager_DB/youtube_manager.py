@@ -13,16 +13,23 @@ cursor.execute('''
 ''')
 
 def list_videos():
-    pass
+    cursor.execute("SELECT * FROM videos")
+    print('\n' + '*' * 70)
+    for row in cursor.fetchall():
+        print(f"{row[0]}. Name: {row[1]}, Duration: {row[2]}")
+    print('*' * 70 + '\n')
 
 def add_video(name, time):
-    pass
+    cursor.execute("INSERT INTO videos (name, time) VALUES (?, ?)", (name, time))
+    conn.commit()
 
-def update_video(video_id):
-    pass
+def update_video(video_id, new_name, new_time):
+    cursor.execute("UPDATE videos SET name = ?, time = ? WHERE id = ?", (new_name, new_time, video_id))
+    conn.commit()
 
 def delete_video(video_id):
-    pass
+    cursor.execute("DELETE FROM videos WHERE id = ?", (video_id, ))
+    conn.commit()
 
 def main():
     while True:
@@ -43,7 +50,9 @@ def main():
             add_video(name, time)
         elif choice == '3':
             video_id = input("Enter video ID to update: ")
-            update_video(video_id)
+            name = input("Enter new video name: ")
+            time = input("Enter new video time: ")
+            update_video(video_id, name, time)
         elif choice == '4':
             video_id = input("Enter video ID to delete: ")
             delete_video(video_id)
