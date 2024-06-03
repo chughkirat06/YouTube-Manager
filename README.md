@@ -17,7 +17,7 @@ This project is a simple YouTube video manager that allows users to add, update,
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/youtube-video-manager.git
+    git clone https://github.com/chughkirat06/YouTube-Manager.git
     cd youtube-video-manager
     ```
 
