@@ -1,7 +1,6 @@
 import sqlite3
 
 conn = sqlite3.connect("youtube_videos.db")
-
 cursor = conn.cursor()
 
 cursor.execute('''
@@ -13,25 +12,47 @@ cursor.execute('''
 ''')
 
 def list_videos():
+    """
+    List all videos stored in the database.
+    """
     cursor.execute("SELECT * FROM videos")
-    print('\n' + '*' * 70)
-    for row in cursor.fetchall():
-        print(f"{row[0]}. Name: {row[1]}, Duration: {row[2]}")
-    print('*' * 70 + '\n')
+    videos = cursor.fetchall()
+    if videos:
+        print('\n' + '*' * 70)
+        for row in videos:
+            print(f"{row[0]}. Name: {row[1]}, Duration: {row[2]}")
+        print('*' * 70 + '\n')
+    else:
+        print("No videos found.")
 
 def add_video(name, time):
+    """
+    Add a new video to the database.
+    """
     cursor.execute("INSERT INTO videos (name, time) VALUES (?, ?)", (name, time))
     conn.commit()
+    print("Video added successfully.")
 
 def update_video(video_id, new_name, new_time):
+    """
+    Update the details of the video in the database.
+    """
     cursor.execute("UPDATE videos SET name = ?, time = ? WHERE id = ?", (new_name, new_time, video_id))
     conn.commit()
+    print("Video updated successfully.")
 
 def delete_video(video_id):
+    """
+    Delete a video from the database.
+    """
     cursor.execute("DELETE FROM videos WHERE id = ?", (video_id, ))
     conn.commit()
+    print("Video deleted successfully.")
 
 def main():
+    """
+    Main function to manage YouTube video database.
+    """
     while True:
         print("\n YouTube Video Manager App with DB ")
         print("1. List all youtube videos ")
